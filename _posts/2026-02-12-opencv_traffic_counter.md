@@ -12,7 +12,7 @@ _<a href="https://github.com/jorgem0/traffic_counter" target="_blank" rel="noope
 
 ## Introduction
 
-This project will use Python and the OpenCV library to count cars on a highway. I will use the NumPy, Matplotlib, and Pandas libraries for this tutorial so please be sure to have those installed along with OpenCV. The source video file I used for this tutorial is from [Highway 01 - Free Video Footage - Background HD Free](https://www.youtube.com/watch?v=dTdsjKRyMuU){:target="_blank" rel="noopener noreferrer"}
+This project will use Python and the OpenCV library to count cars on a highway. I will use the NumPy, Matplotlib, and Pandas libraries for this tutorial so please be sure to have those installed along with OpenCV. The source video file I used for this tutorial is from [Highway 01 - Free Video Footage - Background HD Free](https://www.youtube.com/watch?v=dTdsjKRyMuU){:target="_blank" rel="noopener noreferrer"}.
 
 ## Getting Started and Importing the Image
 
