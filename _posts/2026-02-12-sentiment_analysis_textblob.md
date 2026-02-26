@@ -71,6 +71,7 @@ t = t.replace('\n', ' '); #Replace newline with space
 blob = TextBlob(t) #Pass in clean text file to TextBlob
 
 ```
+{: file="sentiment_analysis.py" }
 
 ## Gathering Data from Text File
 
@@ -235,20 +236,21 @@ ax23.tick_params('y', color='tab:blue')
 fig5.savefig('Histogram for Text File.png',bbox_inches = "tight")
 
 ```
+{: file="sentiment_analysis.py" }
 
 ### Text File Charts
 
 The bar charts can be seen below. Looking at the **Twenty Most Used Words** bar chart, one can see that words such as 'to', 'the', 'of', 'and', and 'I' show up a lot as these are some pretty common words in the English language. Observing the **Twenty Most Used Proper Nouns** bar chart, one can determine who the main characters are of the novel or which characters have a big influence in the novel. Elizabeth Bennet is the protagonist of *Pride and Prejudice* and Fitzwilliam Darcy is her love interest. Jane Bennet is Elizabeth's sister and Charles Bingley is Jane's love interest.
 
-```python
-Total Number of Sentences:  6013
-Total Number of Words:  122524
-Total Number of Nouns:  18127
-Total Number of Verbs:  23724
-Total Number of Adjectives:  7725
-Total Number of Unique Words:  8753
-Total Number of Unique Proper Nouns:  305
-```
+| Total Number of | Count |
+| --- | --- |
+| Sentences | 6013 |
+| Words | 122524 |
+| Nouns | 18127 |
+| Verbs | 23724 |
+| Adjectives | 7725 |
+| Unique Words | 8753 |
+| Unique Proper Nouns | 305 |
 
 ![Twenty Most Used Words](/assets/images/sentiment_analysis_text_blob/Word_Count.png)
 _Twenty Most Used Words_
@@ -519,6 +521,7 @@ print('Chapters with Least Average Number of Adjectives: \n',df_ch.nsmallest(3, 
 
 plt.show()
 ```
+{: file="sentiment_analysis.py" }
 
 ### Number of Sentences, Number of Words, and Average Number of Words per Sentence
 

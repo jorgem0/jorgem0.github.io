@@ -105,3 +105,112 @@ You can run the Adafruit_BME280_Example.py script with `python Adafruit_BME280_E
 _Adafruit BME280 Example Script_
 
 ## Python Code
+
+Go to the Adafruit_Python_BME280 directory and copy the Adafruit_BME280_Example.py script using `cp Adafruit_BME280_Example.py BME280_Custom.py`. Also create a file named BME280CSV with `touch BME280CSV` in order to save data to a CSV file which can also be done with the Raspberry Pi. Open up the BME280_Custom.py file with the vi editor using `vi BME280_Custom.py`. You should now see the unedited copy of Adafruit_BME280_Example.py. We will modify the original file in order for the BME280 sensor to continuously collect data and add it to the `BME280_Data` table created earlier in MariaDB.
+
+![Original Adafruit BME280 Example](/assets/images/rasp_bme_sql/bme1.png)
+_Original Adafruit BME280 Example_
+
+The modified Python script for the BME280 sensor can be seen below. The `MySQLdb` module allows one to connect to the MySQL/MariaDB DBMS and run queries through the cursor execute option. The module `csv` allows easy editing of csv files. The `datetime` module states the current date time when the data is collected inside the `while True:` loop. The module `time` allows the data collection `while True:` loop to pause for 60 seconds with `time.sleep(60)` before it collects data again. More specific details about the code are comments within the code. You can run the BME280_Custom.py script with the `python BME280_Custom.py &`. The addition of `&` allows the script to run in the background so one can resume working on other things since this script goes on indefinitely due to `while True:`.
+
+```python
+from Adafruit_BME280 import *
+import time
+import datetime
+import csv
+import MySQLdb
+
+db = MySQLdb.connect(host="localhost",user="newuser", passwd="newuserpassword",db="RaspberryPi") #connects to MySQL/MariaDB
+cur = db.cursor() #creates cursor to pass on demands to MySQL/MariaDB
+
+sensor = BME280(t_mode=BME280_OSAMPLE_8, p_mode=BME280_OSAMPLE_8, h_mode=BME280_OSAMPLE_8)
+
+with open(r'BME280CSV','w') as f: #w means write to file
+    writer = csv.writer(f)
+    writer.writerow(['Date Time (YYYY-MM-DD HH:MM:SS','Temperature (deg C)','Pressure (Pa)','Humidity (%)']) #CSV file headers
+
+
+
+while True: #collects data indefinitely
+
+    degrees = sensor.read_temperature()
+    pascals = sensor.read_pressure()
+    hectopascals = pascals / 100
+    humidity = sensor.read_humidity()
+    timenow = datetime.datetime.utcnow()
+
+
+    #executes the SQL command in MySQL/MariaDB to insert data.
+    cur.execute('''INSERT INTO BME280_Data(date_time, temperature, pressure, humidity) VALUES(%s,%s,%s,%s);''',(timenow,degrees,pascals,humidity))
+
+
+    db.commit() #commits the data entered above to the table
+
+   # print 'Time      = ' + str(timenow)
+   # print 'Temp      = {0:0.3f} deg C'.format(degrees)
+   # print 'Pressure  = {0:0.2f} hPa'.format(hectopascals)
+   # print 'Humidity  = {0:0.2f} %'.format(humidity)
+
+    with open(r'BME280CSV', 'a') as f: #a means append to file
+        writer = csv.writer(f)
+        writer.writerow([timenow,degrees,pascals,humidity])
+
+
+
+    time.sleep(60) #waits for 60 seconds to collect data again
+
+```
+{: file="BME280_Custom.py" }
+
+Open up BME280CSV with `vi BME280CSV` and you should see the CSV file populated.
+
+![BME280CSV](/assets/images/rasp_bme_sql/csv.png)
+_BME280CSV_
+
+You can also see the data being added to the table we created earlier in MySQL/MariaDB with `SELECT * FROM BME280_Data;`.
+
+![MySQL/MariaDB Data](/assets/images/rasp_bme_sql/data.png)
+_MySQL/MariaDB Data_
+
+Now copy the BME280_Custom.py script and name the new file BME280_Extract.py use the command with `cp BME280_Custom.py BME280_Extract.py`. This file will be used to pull data from MySQL/MariaDB. Also create a new file named BME280CSVNEW with `touch BME280CSVNEW` in order to save the data from the query. The modified file for the BME280 sensor can be seen below along with some comments.
+
+```python
+import csv
+import MySQLdb
+
+db = MySQLdb.connect(host="localhost",user="newuser", passwd="newuserpassword",db="RaspberryPi") #connects to MySQL/MariaDB
+cur = db.cursor() #creates cursor to pass on demands to MySQL/MariaDB
+
+
+with open(r'BME280CSVNEW','w') as f: #w means write to file
+    writer = csv.writer(f)
+    writer.writerow(['Date Time (YYYY-MM-DD HH:MM:SS','Temperature (deg C)','Pressure (Pa)','Humidity (%)']) #CSV file headers
+
+
+
+#executes the SQL command in MySQL/MariaDB to collect data.
+cur.execute('''SELECT * FROM BME280_Data''')
+
+
+
+
+for row in cur.fetchall(): #prints all rows
+    print row #this prints a row in all columns
+   # print row[0] #this prints a row in a specific column
+    with open(r'BME280CSVNEW', 'a') as f: #a means append to file
+        writer = csv.writer(f)
+        writer.writerow([row])
+
+
+db.close()
+
+```
+{: file="BME280_Extract.py" }
+
+Run the new Python script with `python BME280_Extract.py`. Note that there is no `&` since this script does not run indefinitely as it doesn't contain the `while True:` statement. You can also view the new CSV file with `vi BME280CSVNEW`.
+
+![BME280 Extract](/assets/images/rasp_bme_sql/extract1.png)
+_BME280 Extract_
+
+![BME280CSVNEW](/assets/images/rasp_bme_sql/extract2.png)
+_BME280CSVNEW_

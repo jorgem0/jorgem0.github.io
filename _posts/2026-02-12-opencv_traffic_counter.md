@@ -63,6 +63,7 @@ while True:
         image = cv2.resize(frame, (0, 0), None, ratio, ratio)  # resize image
 
 ```
+{: file="traffic_counter.py" }
 
 ![Resize Image](/assets/images/opencv_traffic_counter/resize.png)
 _Resize Image_
@@ -87,6 +88,7 @@ The functions in lines 46-50 (7-11) isolate the cars into shapes that can be mor
         retvalbin, bins = cv2.threshold(dilation, 220, 255, cv2.THRESH_BINARY)  # removes the shadows
 
 ```
+{: file="traffic_counter.py" }
 
 ![Transformations](/assets/images/opencv_traffic_counter/transformations.png)
 _Transformations_
@@ -164,6 +166,7 @@ Lines 70 (19) and 73 (22) create variables for the minimum and maximum areas all
         cyy = cyy[cyy != 0]
 
 ```
+{: file="traffic_counter.py" }
 
 ![Contours and Centroids](/assets/images/opencv_traffic_counter/contours.png)
 _Contours and Centroids_
@@ -285,6 +288,7 @@ Examples of what the dataframe looks like when it is saved as a CSV file in line
                         df.at[int(framenumber), str(t)] = [cxx[i], cyy[i]]  # add centroid to the new car id
 
 ```
+{: file="traffic_counter.py" }
 
 ![CSV Example](/assets/images/opencv_traffic_counter/csvexample.png)
 _CSV Example_
@@ -363,6 +367,7 @@ Line 258 (45) checks if the old centroid y position is greater than or equal to 
                         caridscrossed.append(currentcarsindex[i])
 
 ```
+{: file="traffic_counter.py" }
 
 ![Up](/assets/images/opencv_traffic_counter/up.png)
 _Up_
@@ -433,6 +438,7 @@ cv2.destroyAllWindows()
 # saves dataframe to csv file for later analysis
 df.to_csv('traffic.csv', sep=',')
 ```
+{: file="traffic_counter.py" }
 
 ![Finishing Touches](/assets/images/opencv_traffic_counter/finishingtouches.png)
 _Finishing Touches_
@@ -483,6 +489,7 @@ plt.legend(bbox_to_anchor=(1, 1.2), fontsize='x-small')  # legend location and f
 plt.show()
 fig1.savefig('traffic.png')  # saves image
 ```
+{: file="plot_centroids.py" }
 
 ![Plotting Data](/assets/images/opencv_traffic_counter/traffic.png)
 _Plotting Data_

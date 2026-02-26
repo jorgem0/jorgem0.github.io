@@ -39,7 +39,7 @@ The API and Secret Keys are then loaded from the config.yml file. The Binance tu
 apikey: 'API_KEY_HERE'
 secretkey: 'SECRET_KEY_HERE'
 ```
-{: file="path/to/file" }
+{: file="config.yml" }
 
 ```python
 import numpy as np
@@ -80,6 +80,7 @@ symbol_first='BNB' # Make sure this matches above
 symbol_second='BUSD' # Make sure this matches above
 
 ```
+{: file="binance_bot.py" }
 
 ## Current Price
 
@@ -111,6 +112,7 @@ def current_price():
 
 
 ```
+{: file="binance_bot.py" }
 
 ```python
 >>> print(response_cp)
@@ -226,6 +228,7 @@ def account_balance():
 
 
 ```
+{: file="binance_bot.py" }
 
 ```python
 >>> print(json.dumps(account_info, indent=4))
@@ -343,6 +346,7 @@ def latest_transaction():
 
 
 ```
+{: file="binance_bot.py" }
 
 ```python
 >>> print(json.dumps(trades, indent=4))
@@ -462,6 +466,7 @@ def submit_order():
 
 
 ```
+{: file="binance_bot.py" }
 
 ## Trading Loop
 
@@ -657,25 +662,13 @@ while True: # Continuously Run
 
 
 ```
+{: file="binance_bot.py" }
 
 ## Bash Script
 
 The b_rerun.sh bash script below can be used on a server/Raspberry Pi/etc... to run the binance_bot.py script and continuously check if it needs to be ran again just in case binance_bot.py crashes. The command `ps aux | grep '[p]ython binance_bot.py'` looks for a process running with the text `'[p]ython binance_bot.py'` to see if the binance_bot.py script is running. If it finds a matching process, it continues, does nothing, and then waits for 30 minutes before continuing to the next loop in the continuous while loop. If it doesn't find a matching process, it calls on python to run the script, outputs the script's print to b_output.txt, and then waits for 30 minutes before continuing to the next loop in the continuous while loop. The b_rerun.sh bash script can be ran with `sh b_rerun.sh &> b_rerunoutput.txt &` where the echo (print) is outputted to b_rerunoutput.txt.
 
 If the process ID (PID) for either the b_rerun.sh or binance_bot.py script needs to be found in order to terminate the process, one can use `ps aux | grep '[b]_rerun.sh'` and `ps aux | grep '[b]inance_bot.py'`, respectively. Once the PIDs are found, one can terminate the scripts using `kill PID`. Note that b_rerun.sh needs to be killed as well or else it will start binance_bot.py up again after 30 minutes. If the square brackets [] are not included in these commands, the search itself will be returned as well. This is why the square brackets [] are used in the b_rerun.sh bash script since it will see the search itself and think the binance_bot.py script is still running when it is not.
-
-```bash
->>> ps aux | grep '[b]_rerun.sh'
-	pi         618  0.0  0.0   1940   420 pts/1    S    22:53   0:00 sh b_rerun.sh
-
->>> ps aux | grep 'b_rerun.sh'
-	pi         618  0.0  0.0   1940   420 pts/1    S    22:53   0:00 sh b_rerun.sh
-	pi         769  0.0  0.0   7348   492 pts/1    S+   23:00   0:00 grep --color=auto b_rerun.sh
-
->>> kill 618
-```
-
-b_rerun.sh bash script:
 
 ```bash
 while :
@@ -696,4 +689,16 @@ do
 	sleep 30m
 done
 
+```
+{: file="b_rerun.sh" }
+
+```bash
+>>> ps aux | grep '[b]_rerun.sh'
+	pi         618  0.0  0.0   1940   420 pts/1    S    22:53   0:00 sh b_rerun.sh
+
+>>> ps aux | grep 'b_rerun.sh'
+	pi         618  0.0  0.0   1940   420 pts/1    S    22:53   0:00 sh b_rerun.sh
+	pi         769  0.0  0.0   7348   492 pts/1    S+   23:00   0:00 grep --color=auto b_rerun.sh
+
+>>> kill 618
 ```

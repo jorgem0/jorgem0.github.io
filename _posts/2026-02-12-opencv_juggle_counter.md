@@ -116,6 +116,7 @@ while True:  # for video feeds
         image = cv2.resize(frame, (0, 0), None, ratio, ratio)  # resize image
 
 ```
+{: file="juggle_counter.py" }
 
 ![Pick Color](/assets/images/opencv_juggle_counter/pickcolor.png)
 _Pick Color_
@@ -147,6 +148,7 @@ As mentioned above, the background subtractor `cv2.createBackgroundSubtractorMOG
         retvalbin, bins = cv2.threshold(dilation, 220, 255, cv2.THRESH_BINARY)
 
 ```
+{: file="juggle_counter.py" }
 
 ![Color Slider](/assets/images/opencv_juggle_counter/colorslider.png)
 _Color Slider_
@@ -225,6 +227,7 @@ This section of the code is identical to the [OpenCV Traffic Counter: Create Con
         cyy = cyy[cyy != 0]
 
 ```
+{: file="juggle_counter.py" }
 
 ![Contours and Centroids](/assets/images/opencv_juggle_counter/contours.png)
 _Contours and Centroids_
@@ -332,6 +335,7 @@ This section is identical to the [OpenCV Traffic Counter: Keep Track of Centroid
                         df.at[int(framenumber), str(t)] = [cxx[i], cyy[i]]  # add centroid to the new car id
 
 ```
+{: file="juggle_counter.py" }
 
 ![CSV Example](/assets/images/opencv_juggle_counter/csvexample.png)
 _CSV Example_
@@ -402,6 +406,7 @@ The difference between this tutorial and the Traffic Counter tutorial is that th
                         cv2.line(image, (0, lineypos2), (width, lineypos2), (0, 0, 125), 5)
 
 ```
+{: file="juggle_counter.py" }
 
 ![Up](/assets/images/opencv_juggle_counter/up.png)
 _Up_
@@ -473,6 +478,7 @@ cv2.destroyAllWindows()
 # saves dataframe to csv file for later analysis
 df.to_csv('juggle.csv', sep=',')
 ```
+{: file="juggle_counter.py" }
 
 ![Finishing Touches](/assets/images/opencv_juggle_counter/finishingtouches.png)
 _Finishing Touches_
@@ -521,6 +527,7 @@ plt.legend(bbox_to_anchor=(1, 1.2), fontsize='x-small')  # legend location and f
 plt.show()
 fig1.savefig('juggle.png')  # saves image
 ```
+{: file="plot_centroids.py" }
 
 ![Plotting the Data](/assets/images/opencv_juggle_counter/juggle.png)
 _Plotting the Data_
