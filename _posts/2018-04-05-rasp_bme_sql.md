@@ -74,7 +74,7 @@ _MariaDB_
 
 ## Wiring Raspberry Pi and BME280
 
-The wiring for the BME280 sensor and the Raspberry Pi is seen in the diagram below. This diagram was created using [Fritzing](http://fritzing.org/home/){:target="_blank" rel="noopener noreferrer"}. The pinout diagram for the Raspberry Pi is from [pinout.xyz](https://pinout.xyz){:target="_blank" rel="noopener noreferrer"}. The wires are connected as follows:
+The wiring for the BME280 sensor and the Raspberry Pi is seen in the diagram below. This diagram was created using [Fritzing](https://fritzing.org/home/){:target="_blank" rel="noopener noreferrer"}. The pinout diagram for the Raspberry Pi is from [pinout.xyz](https://pinout.xyz){:target="_blank" rel="noopener noreferrer"}. The wires are connected as follows:
 
 ```mermaid
 flowchart LR
