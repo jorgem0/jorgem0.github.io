@@ -41,3 +41,17 @@ This work is published under [MIT][mit] License.
 [chirpy]: https://github.com/cotes2020/jekyll-theme-chirpy/
 [CD]: https://en.wikipedia.org/wiki/Continuous_deployment
 [mit]: https://github.com/cotes2020/chirpy-starter/blob/master/LICENSE
+
+## eventmachine
+
+https://github.com/eventmachine/eventmachine/issues/990#issuecomment-2457585644
+
+```
+sudo rm -rf /Library/Developer/CommandLineTools
+xcode-select --install
+rbenv install 3.3.5
+rbenv local 3.3.5
+ruby -rrbconfig -e 'puts RbConfig::CONFIG["CXX"]' # correctly prints "clang++"
+bundle install
+bundle exec jekyll serve
+```
