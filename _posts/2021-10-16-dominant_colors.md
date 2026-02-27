@@ -11,13 +11,12 @@ toc: true
 
 Welcome! Below are some sample images created using the Dominant Colors Web App.
 
-The Dominant Colors App calculates the dominant colors of an image by clustering the image's pixels into a number of groups specified by the user.
+The Dominant Colors App calculates the dominant colors of an image by clustering the image's pixels into a number of groups specified by the user. This uses the Machine Learning algorithm K-means clustering in the background.
 
 If you want to make your own, click on the Dominant Colors Web App logo below.
 
-<div style="display: flex; gap: 12px; justify-content: center; align-items: center;">
-<a href='https://dominant-colors-ae1e9.web.app/' target='_blank'><img src="/assets/img/dominant_colors/logo192.png" style="width: 100px; padding:10px"></a>
-</div>
+![Dominant Colors](/assets/img/dominant_colors/logo192.png){: width="100" height="100" }
+_<a href="https://dominant-colors-ae1e9.web.app/" target="_blank" rel="noopener noreferrer">Dominant Colors</a>_
 
 The Android and iOS App are no longer available but below are some screenshots of what it looked like in the app store.
 
