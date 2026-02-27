@@ -1,11 +1,13 @@
 ---
 title: Sentiment Analysis with TextBlob
 description: Sentiment analysis and text exploration of a novel.
+categories: [Natural Language Processing, Sentiment Analysis]
+tags: [Sentiment Analysis, Novel, TextBlob, Pandas]
 layout: post
 toc: true
 ---
 
-![jorgem0/binance-trading-robot](/assets/images/github.svg){: width="100" height="100" }
+![jorgem0/binance-trading-robot](/assets/img/github.svg){: width="100" height="100" }
 _<a href="https://github.com/jorgem0/sentiment_analysis" target="_blank" rel="noopener noreferrer">jorgem0/sentiment_analysis</a>_
 
 ## Introduction
@@ -16,10 +18,10 @@ This tutorial will go over the process of performing sentiment analysis on a tex
 
 There are many different locations that you can acquire text in order to perform sentiment analysis such as Twitter (sentiment of tweets including a certain #hashtag), IMDB (sentiment of movie reviews), or Amazon (sentiment of product reviews). This tutorial will perform sentiment analysis on a novel available on Project Gutenburg as a text file. The novel chosen was *Pride and Prejudice* by Jane Austen. Once you acquire the text, you have to clean it a bit so TextBlob does not parse it in a way that you don't want it to. For example, the novel text files from Project Gutenburg have some text at the beginning and at the end of the novel which provide information about Project Gutenburg that is not relevant to the novel which we can go ahead and delete. I have also deleted the title and author of the novel as my code looks for the chapter headers in order to analyze the data as seen later on in the code.
 
-![Beginning Text](/assets/images/sentiment_analysis_text_blob/beginningtext.png)
+![Beginning Text](/assets/img/sentiment_analysis_text_blob/beginningtext.png)
 _Beginning Text_
 
-![End Text](/assets/images/sentiment_analysis_text_blob/endtext.png)
+![End Text](/assets/img/sentiment_analysis_text_blob/endtext.png)
 _End Text_
 
 Cleaning up the text file can sometimes be as easy as deleting some text in certain sections of the text file but sometimes it can be a lot more difficult. For example, the way I set up my code, it looks for the chapter headers in order to recognize when a new chapter has started. However, if the text file is passed into TextBlob in its current state, TextBlob will think the chapter headers are part of the sentence immediately after since the chapter headers do not have a punctuation mark at the end of the header. Looking at the screenshot of the text file above, TextBlob will think "Chapter 1 It is a truth universally acknowledged..." is one whole sentence. In order to have two sentences, we will need to make each of the chapter headers have a punctuation mark, i.e. "Chapter 1." instead of "Chapter 1" without a period. This is where coding comes in handy.
@@ -252,15 +254,15 @@ The bar charts can be seen below. Looking at the **Twenty Most Used Words** bar 
 | Unique Words | 8753 |
 | Unique Proper Nouns | 305 |
 
-![Twenty Most Used Words](/assets/images/sentiment_analysis_text_blob/Word_Count.png)
+![Twenty Most Used Words](/assets/img/sentiment_analysis_text_blob/Word_Count.png)
 _Twenty Most Used Words_
 
-![Twenty Most Used Proper Nouns](/assets/images/sentiment_analysis_text_blob/Proper_noun_Count.png)
+![Twenty Most Used Proper Nouns](/assets/img/sentiment_analysis_text_blob/Proper_noun_Count.png)
 _Twenty Most Used Proper Nouns_
 
 The histogram charts, which are based on a per sentence basis, can be seen below. Most sentences from the novel are fairly neutral and objective. Most of the sentences have between 1-25 words, 0-5 nouns, 0-5 verbs, and 0-2 adjectives. It would be interesting to try and fit a distribution to this data and calculate its Probability Density Function (PDF for continuous distributions) or its Probability Mass Function (PMF for discrete distributions) and its Cumulative Distribution Function (CMF). I will leave that for a later project.
 
-![Histogram for Text File](/assets/images/sentiment_analysis_text_blob/Histogram for Text File.png)
+![Histogram for Text File](/assets/img/sentiment_analysis_text_blob/Histogram for Text File.png)
 _Histogram for Text File_
 
 ## Gathering Data from Each Chapter
@@ -540,7 +542,7 @@ The chapter specific data for number of sentences, number of words, and average 
 | 12 | 22 |
 | Mean | 97.57 |
 
-![Number of Sentences per Chapter](/assets/images/sentiment_analysis_text_blob/Number of Sentences per Chapter.png)
+![Number of Sentences per Chapter](/assets/img/sentiment_analysis_text_blob/Number of Sentences per Chapter.png)
 _Number of Sentences per Chapter_
 
 **Number of Words**
@@ -556,7 +558,7 @@ _Number of Sentences per Chapter_
 | 12 | 677 |
 | Mean | 2008.59 |
 
-![Number of Words per Chapter](/assets/images/sentiment_analysis_text_blob/Number of Words per Chapter.png)
+![Number of Words per Chapter](/assets/img/sentiment_analysis_text_blob/Number of Words per Chapter.png)
 _Number of Words per Chapter_
 
 **Average Number of Words per Sentence**
@@ -572,7 +574,7 @@ _Number of Words per Chapter_
 | 49 | 14.112500 |
 | Mean | 21.80 |
 
-![Average Number of Words per Sentence](/assets/images/sentiment_analysis_text_blob/Average Number of Words per Sentence per Chapter.png)
+![Average Number of Words per Sentence](/assets/img/sentiment_analysis_text_blob/Average Number of Words per Sentence per Chapter.png)
 _Average Number of Words per Sentence per Chapter_
 
 ### Average Polarity and Subjectivity per Sentence
@@ -605,7 +607,7 @@ The average polarity and average subjectivity per sentence for each chapter can 
 | 20 | 0.287465 |
 | Mean | 0.3888 |
 
-![Average Polarity and Average Subjectivity per Sentence per Chapter](/assets/images/sentiment_analysis_text_blob/Average Polarity and Average Subjectivity per Sentence per Chapter.png)
+![Average Polarity and Average Subjectivity per Sentence per Chapter](/assets/img/sentiment_analysis_text_blob/Average Polarity and Average Subjectivity per Sentence per Chapter.png)
 _Average Polarity and Average Subjectivity per Sentence per Chapter_
 
 ### Total and Average Specific Words
@@ -655,7 +657,7 @@ The chapters with the most nouns are chapters 43, 18, and 47 while the chapters 
 | 2 | 45 |
 | Mean | 126.63 |
 
-![Specific Number of Words per Chapter](/assets/images/sentiment_analysis_text_blob/Specific Number of Words per Chapter.png)
+![Specific Number of Words per Chapter](/assets/img/sentiment_analysis_text_blob/Specific Number of Words per Chapter.png)
 _Specific Number of Words per Chapter_
 
 #### Average Specific Words
@@ -701,21 +703,21 @@ The average number of nouns, verbs, and adjectives per sentence for each chapter
 | 49 | 0.787500 |
 | Mean | 1.38 |
 
-![Average Specific Number of Words per Sentence per Chapter](/assets/images/sentiment_analysis_text_blob/Average Specific Number of Words per Sentence per Chapter.png)
+![Average Specific Number of Words per Sentence per Chapter](/assets/img/sentiment_analysis_text_blob/Average Specific Number of Words per Sentence per Chapter.png)
 _Average Specific Number of Words per Sentence per Chapter_
 
 ### Chapter Histograms
 
 The histograms of the number of sentences, words, specific words, average polarity, and average subjectivy per chapter can be seen below. Most chapters have between 50-100 sentences, around 1500 words, 300 nouns, 300 verbs, 125 adjectives, 0.75 average polarity, and 0.375 average subjectivity. As mentioned previously, it would be interesting to try and fit a distribution to this data.
 
-![Histogram of Number of Sentences per Chapter](/assets/images/sentiment_analysis_text_blob/Histogram of Number of Sentences per Chapter.png)
+![Histogram of Number of Sentences per Chapter](/assets/img/sentiment_analysis_text_blob/Histogram of Number of Sentences per Chapter.png)
 _Histogram of Number of Sentences per Chapter_
 
-![Histogram of Words per Chapter](/assets/images/sentiment_analysis_text_blob/Histogram of Words per Chapter.png)
+![Histogram of Words per Chapter](/assets/img/sentiment_analysis_text_blob/Histogram of Words per Chapter.png)
 _Histogram of Words per Chapter_
 
-![Histogram of Specific Words per Chapter](/assets/images/sentiment_analysis_text_blob/Histogram of Specific Words per Chapter.png)
+![Histogram of Specific Words per Chapter](/assets/img/sentiment_analysis_text_blob/Histogram of Specific Words per Chapter.png)
 _Histogram of Specific Words per Chapter_
 
-![Histogram of Polarity and Subjectivity per Chapter](/assets/images/sentiment_analysis_text_blob/Histogram of Polarity and Subjectivity per Chapter.png)
+![Histogram of Polarity and Subjectivity per Chapter](/assets/img/sentiment_analysis_text_blob/Histogram of Polarity and Subjectivity per Chapter.png)
 _Histogram of Polarity and Subjectivity per Chapter_

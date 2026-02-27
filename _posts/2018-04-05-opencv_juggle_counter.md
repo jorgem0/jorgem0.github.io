@@ -1,11 +1,13 @@
 ---
 title: OpenCV Juggle Counter
 description: Track objects being juggled using OpenCV.
+categories: [Computer Vision, Object Tracker]
+tags: [Juggle, Color, OpenCV, Pandas]
 layout: post
 toc: true
 ---
 
-![jorgem0/juggle_counter](/assets/images/github.svg){: width="100" height="100" }
+![jorgem0/juggle_counter](/assets/img/github.svg){: width="100" height="100" }
 _<a href="https://github.com/jorgem0/juggle_counter" target="_blank" rel="noopener noreferrer">jorgem0/juggle_counter</a>_
 
 {% include embed/youtube.html id='wwfAgBZU508' %}
@@ -118,10 +120,10 @@ while True:  # for video feeds
 ```
 {: file="juggle_counter.py" }
 
-![Pick Color](/assets/images/opencv_juggle_counter/pickcolor.png)
+![Pick Color](/assets/img/opencv_juggle_counter/pickcolor.png)
 _Pick Color_
 
-![Pick Color 2](/assets/images/opencv_juggle_counter/pickcolor2.png)
+![Pick Color 2](/assets/img/opencv_juggle_counter/pickcolor2.png)
 _Pick Color 2_
 
 ## Apply Thresholds by Color and Transformations
@@ -150,10 +152,10 @@ As mentioned above, the background subtractor `cv2.createBackgroundSubtractorMOG
 ```
 {: file="juggle_counter.py" }
 
-![Color Slider](/assets/images/opencv_juggle_counter/colorslider.png)
+![Color Slider](/assets/img/opencv_juggle_counter/colorslider.png)
 _Color Slider_
 
-![Color Slider Updated](/assets/images/opencv_juggle_counter/colorsliderupdated.png)
+![Color Slider Updated](/assets/img/opencv_juggle_counter/colorsliderupdated.png)
 _Color Slider Updated_
 
 ## Create Contours and Acquire Centroids
@@ -229,7 +231,7 @@ This section of the code is identical to the [OpenCV Traffic Counter: Create Con
 ```
 {: file="juggle_counter.py" }
 
-![Contours and Centroids](/assets/images/opencv_juggle_counter/contours.png)
+![Contours and Centroids](/assets/img/opencv_juggle_counter/contours.png)
 _Contours and Centroids_
 
 ## Keep Track of Centroids
@@ -337,7 +339,7 @@ This section is identical to the [OpenCV Traffic Counter: Keep Track of Centroid
 ```
 {: file="juggle_counter.py" }
 
-![CSV Example](/assets/images/opencv_juggle_counter/csvexample.png)
+![CSV Example](/assets/img/opencv_juggle_counter/csvexample.png)
 _CSV Example_
 
 ## Counting Objects
@@ -408,10 +410,10 @@ The difference between this tutorial and the Traffic Counter tutorial is that th
 ```
 {: file="juggle_counter.py" }
 
-![Up](/assets/images/opencv_juggle_counter/up.png)
+![Up](/assets/img/opencv_juggle_counter/up.png)
 _Up_
 
-![Down](/assets/images/opencv_juggle_counter/down.png)
+![Down](/assets/img/opencv_juggle_counter/down.png)
 _Down_
 
 ## Finishing Touches
@@ -480,7 +482,7 @@ df.to_csv('juggle.csv', sep=',')
 ```
 {: file="juggle_counter.py" }
 
-![Finishing Touches](/assets/images/opencv_juggle_counter/finishingtouches.png)
+![Finishing Touches](/assets/img/opencv_juggle_counter/finishingtouches.png)
 _Finishing Touches_
 
 ## Plotting the Data
@@ -529,7 +531,7 @@ fig1.savefig('juggle.png')  # saves image
 ```
 {: file="plot_centroids.py" }
 
-![Plotting the Data](/assets/images/opencv_juggle_counter/juggle.png)
+![Plotting the Data](/assets/img/opencv_juggle_counter/juggle.png)
 _Plotting the Data_
 
 ## Cautions
@@ -540,22 +542,22 @@ The cautions of this tutorial are the same as the cautions in the [OpenCV Traffi
 
 As mentioned earlier, there is a known issue if the objects move greater distances than the maximum radius allowable between frames. Below is a different juggling video in which the objects exhibit said behavior. The image Frame 0 below starts tracking all 5 objects on screen but the tracking has different effects with different values for the maximum radius allowable. Frame 1 with a maximum radius of 25 now detects more objects (noted by the lack of the thin green square signify that the object's centroid was not in the previous frame) and thinks that previous objects have disappeared since those objects' centroids have moved beyond the maximum radius allowable. Changing the maximum radius allowable to 50 fixes the issue as seen in the third image (where all objects now have a thin green squares) but can cause other problems such as conjoining of IDs as discussed in the [OpenCV Traffic Counter: Known Issues](https://jorgem0.github.io/posts/opencv_traffic_counter#known-issues){:target="_blank" rel="noopener noreferrer"} section. This can also occur if the centroids moving large distances are actually closer to other centroids than their own in the previous frames since tracking is based off of proximity.
 
-![Frame 0](/assets/images/opencv_juggle_counter/distance.png)
+![Frame 0](/assets/img/opencv_juggle_counter/distance.png)
 _Frame 0_
 
-![Frame 1 Max Radius 25](/assets/images/opencv_juggle_counter/distance2.png)
+![Frame 1 Max Radius 25](/assets/img/opencv_juggle_counter/distance2.png)
 _Frame 1 Max Radius 25_
 
-![Frame 1 Max Radius 50](/assets/images/opencv_juggle_counter/distance3.png)
+![Frame 1 Max Radius 50](/assets/img/opencv_juggle_counter/distance3.png)
 _Frame 1 Max Radius 50_
 
 The other known issue is the double counting of centroids that have crossed a line since we have removed the double count check. In the images below, the bottom left ball is about to cross the `lineypos2` line in frame 201. The ball then lands on the `lineypos2` line in frame 202 causing the script to count it as crossing down since the centroid was above or on the line in the previous frame and the centroid is now on or below the line in the current frame. Here is where the issue arises in frame 203: since the centroid was above or on the line in the previous frame and the centroid is now on or below the line in the current frame, it also counts the ball as crossing. This issue throws off the count and can also be caused if the contour changes shape and causes the centroid to oscillate above and below the line between frames.
 
-![Double Counting Frame 201](/assets/images/opencv_juggle_counter/double.png)
+![Double Counting Frame 201](/assets/img/opencv_juggle_counter/double.png)
 _Double Counting Frame 201_
 
-![Double Counting Frame 202](/assets/images/opencv_juggle_counter/double2.png)
+![Double Counting Frame 202](/assets/img/opencv_juggle_counter/double2.png)
 _Double Counting Frame 202_
 
-![Double Counting Frame 203](/assets/images/opencv_juggle_counter/double3.png)
+![Double Counting Frame 203](/assets/img/opencv_juggle_counter/double3.png)
 _Double Counting Frame 203_

@@ -1,6 +1,8 @@
 ---
 title: Binance Trading Robot
 description: Create a Binance Trading Robot.
+categories: [Finance, Crypto]
+tags: [Crypto, Binance, Trading, Rest API]
 layout: post
 toc: true
 ---
@@ -8,7 +10,7 @@ toc: true
 > Disclaimer: I do not provide personal investment advice and I am not a qualified licensed investment advisor. The information provided may include errors or inaccuracies. Conduct your own due diligence, or consult a licensed financial advisor or broker before making any and all investment decisions. Any investments, trades, speculations, or decisions made on the basis of any information found on this site and/or script, expressed or implied herein, are committed at your own risk, financial or otherwise. No representations or warranties are made with respect to the accuracy or completeness of the content of this entire site and/or script, including any links to other sites and/or scripts. The content of this site and/or script is for informational purposes only and is of general nature. You bear all risks associated with the use of the site and/or script and content, including without limitation, any reliance on the accuracy, completeness or usefulness of any content available on the site and/or script. Use at your own risk.
 {: .prompt-danger }
 
-![jorgem0/binance-trading-robot](/assets/images/github.svg){: width="100" height="100" }
+![jorgem0/binance-trading-robot](/assets/img/github.svg){: width="100" height="100" }
 _<a href="https://github.com/jorgem0/binance-trading-robot" target="_blank" rel="noopener noreferrer">jorgem0/binance-trading-robot</a>_
 
 ## Introduction

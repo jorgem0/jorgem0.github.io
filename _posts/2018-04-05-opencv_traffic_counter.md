@@ -1,11 +1,13 @@
 ---
 title: OpenCV Traffic Counter
 description: Count cars in traffic using OpenCV.
+categories: [Computer Vision, Object Tracker]
+tags: [Traffic, Cars, OpenCV, Pandas]
 layout: post
 toc: true
 ---
 
-![jorgem0/traffic_counter](/assets/images/github.svg){: width="100" height="100" }
+![jorgem0/traffic_counter](/assets/img/github.svg){: width="100" height="100" }
 _<a href="https://github.com/jorgem0/traffic_counter" target="_blank" rel="noopener noreferrer">jorgem0/traffic_counter</a>_
 
 {% include embed/youtube.html id='3gfkmNi65RQ' %}
@@ -65,7 +67,7 @@ while True:
 ```
 {: file="traffic_counter.py" }
 
-![Resize Image](/assets/images/opencv_traffic_counter/resize.png)
+![Resize Image](/assets/img/opencv_traffic_counter/resize.png)
 _Resize Image_
 
 ## Apply Thresholds and Transformations
@@ -90,7 +92,7 @@ The functions in lines 46-50 (7-11) isolate the cars into shapes that can be mor
 ```
 {: file="traffic_counter.py" }
 
-![Transformations](/assets/images/opencv_traffic_counter/transformations.png)
+![Transformations](/assets/img/opencv_traffic_counter/transformations.png)
 _Transformations_
 
 ## Create Contours and Acquire Centroids
@@ -168,7 +170,7 @@ Lines 70 (19) and 73 (22) create variables for the minimum and maximum areas all
 ```
 {: file="traffic_counter.py" }
 
-![Contours and Centroids](/assets/images/opencv_traffic_counter/contours.png)
+![Contours and Centroids](/assets/img/opencv_traffic_counter/contours.png)
 _Contours and Centroids_
 
 ## Keep Track of Centroids
@@ -290,10 +292,10 @@ Examples of what the dataframe looks like when it is saved as a CSV file in line
 ```
 {: file="traffic_counter.py" }
 
-![CSV Example](/assets/images/opencv_traffic_counter/csvexample.png)
+![CSV Example](/assets/img/opencv_traffic_counter/csvexample.png)
 _CSV Example_
 
-![CSV Example All](/assets/images/opencv_traffic_counter/csvexample2.png)
+![CSV Example All](/assets/img/opencv_traffic_counter/csvexample2.png)
 _CSV Example All_
 
 ## Counting Cars
@@ -369,10 +371,10 @@ Line 258 (45) checks if the old centroid y position is greater than or equal to 
 ```
 {: file="traffic_counter.py" }
 
-![Up](/assets/images/opencv_traffic_counter/up.png)
+![Up](/assets/img/opencv_traffic_counter/up.png)
 _Up_
 
-![Down](/assets/images/opencv_traffic_counter/down.png)
+![Down](/assets/img/opencv_traffic_counter/down.png)
 _Down_
 
 ## Finishing Touches
@@ -440,7 +442,7 @@ df.to_csv('traffic.csv', sep=',')
 ```
 {: file="traffic_counter.py" }
 
-![Finishing Touches](/assets/images/opencv_traffic_counter/finishingtouches.png)
+![Finishing Touches](/assets/img/opencv_traffic_counter/finishingtouches.png)
 _Finishing Touches_
 
 ## Plotting the Data
@@ -491,44 +493,44 @@ fig1.savefig('traffic.png')  # saves image
 ```
 {: file="plot_centroids.py" }
 
-![Plotting Data](/assets/images/opencv_traffic_counter/traffic.png)
+![Plotting Data](/assets/img/opencv_traffic_counter/traffic.png)
 _Plotting Data_
 
 ## Cautions
 
 As can be seen in the plot above, the tracking works great but can sometimes track extra contours due to the imperfections of the applied transformations. The two `carids` that are between the two highways are caused by the first couple of frames where the background subtractor is adjusting and it catches some differences. This does not affect the tracking but just gives two extra `carids`.  
 
-![Frame 0](/assets/images/opencv_traffic_counter/start.png)
+![Frame 0](/assets/img/opencv_traffic_counter/start.png)
 _Frame 0_
 
 The merging and unmerging of contours can also cause the algorithm to track new `carids`. As seen below, two contours merging into one in the bottom right hand corner causes one contour to be removed and the other to keep track of the merged contour if the previous centroid is within the maximum radius. If the contour splits again into two cars, the algorithm will create another carid if the previous centroid is outside the maximum radius. Again, not really a tracking issue but just causes multiple `carids` to be created due to the contours changing. However, this will prevent the car crossing count to be off since those `carids` that disappeared never crossed `lineypos2`. 
 
-![Frame 202 Max Radius 25](/assets/images/opencv_traffic_counter/202_25.png)
+![Frame 202 Max Radius 25](/assets/img/opencv_traffic_counter/202_25.png)
 _Frame 202 Max Radius 25_
 
-![Frame 203 Max Radius 25](/assets/images/opencv_traffic_counter/203_25.png)
+![Frame 203 Max Radius 25](/assets/img/opencv_traffic_counter/203_25.png)
 _Frame 203 Max Radius 25_
 
-![Frame 205 Max Radius 25](/assets/images/opencv_traffic_counter/205_25.png)
+![Frame 205 Max Radius 25](/assets/img/opencv_traffic_counter/205_25.png)
 _Frame 205 Max Radius 25_
 
 Another instance when multiple `carids` are created is when the image brightens up (I believe) and causes a lot of contours to be created. This can be seen below. This just creates multiple `carids` but does not affect tracking. The main takeaway is to make sure the cars are easily distinguishable, do not merge, and that there are no random image brightenings. If this is done, the tracking will work just fine.
 
-![Bright](/assets/images/opencv_traffic_counter/bright.png)
+![Bright](/assets/img/opencv_traffic_counter/bright.png)
 _Bright_
 
 ## Known Issues
 
 A known issue with the tracking algorithm arises if the maximum radius is too large and multiple centroids are close to other centroids. Below is frame 199 and 200 with a maximum radius of 25 and 50. Frame 199 has a two contours (ID: 25 and 26) for the bottom right car due to the transformations not being perfect. The issue arises on the next frame (frame 200) when one of the contours (ID: 25) vanishes and the bottom right car now only has one contour (ID: 26). The smaller radius of 25 doesn't track ID: 25 and is only tracking ID: 26 for that car since the maximum radius of ID: 25 does not contain the centroid of ID: 26. However, the maximum radius of 50 makes it so the tracking algorithm conjoins ID: 25 and 26 to the centroid of ID: 26 since ID: 26 is within the maximum radius of ID: 25. As can be seen in the top left hand corner of the image, frame 200 for the maximum radius of 25 correctly tracks 5 cars while the maximum radius of 50 incorrectly tracks 6 cars. ID: 25 is now conjoined with ID: 26 for the maximum radius of 50 causing an extra car to be tracked. This issue can also occur if the object moves a distance greater than the maximum radius between each frame causing the ID to be conjoined with another ID or a new ID to be created. This example can be seen in the Known Issues section when objects move great distances between frames.
 
-![Frame 199 Max Radius 25](/assets/images/opencv_traffic_counter/199_25.png)
+![Frame 199 Max Radius 25](/assets/img/opencv_traffic_counter/199_25.png)
 _Frame 199 Max Radius 25_
 
-![Frame 200 Max Radius 25](/assets/images/opencv_traffic_counter/200_25.png)
+![Frame 200 Max Radius 25](/assets/img/opencv_traffic_counter/200_25.png)
 _Frame 200 Max Radius 25_
 
-![Frame 199 Max Radius 50](/assets/images/opencv_traffic_counter/199_50.png)
+![Frame 199 Max Radius 50](/assets/img/opencv_traffic_counter/199_50.png)
 _Frame 199 Max Radius 50_
 
-![Frame 200 Max Radius 50](/assets/images/opencv_traffic_counter/200_50.png)
+![Frame 200 Max Radius 50](/assets/img/opencv_traffic_counter/200_50.png)
 _Frame 200 Max Radius 50_

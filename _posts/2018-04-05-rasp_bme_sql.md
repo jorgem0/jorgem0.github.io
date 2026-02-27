@@ -1,12 +1,14 @@
 ---
 title: Raspberry Pi BME280 MySQL Data Collection
 description: Collect data using a Raspberry Pi and BME280 sensor and upload it to a MySQL database.
+categories: [Maker, Raspberry Pi]
+tags: [Raspberry Pi, Temperature Pressure Humidity Sensor, MySQL]
 layout: post
 toc: true
 mermaid: true
 ---
 
-![jorgem0/raspberry\u005fpi\u005fbme280\u005fmysql](/assets/images/github.svg){: width="100" height="100" }
+![jorgem0/raspberry\u005fpi\u005fbme280\u005fmysql](/assets/img/github.svg){: width="100" height="100" }
 _<a href="https://github.com/jorgem0/raspberry_pi_bme280_mysql" target="_blank" rel="noopener noreferrer">jorgem0/raspberry_pi_bme280_mysql</a>_
 
 ## Introduction
@@ -17,20 +19,20 @@ This tutorial will use a Raspberry Pi Zero W, a BME280 sensor, and MariaDB in or
 
 The first step for this project is to install the Raspbian Stretch OS for the Raspberry Pi. Download the Raspbian Stretch OS image from the [Raspberry Pi website](https://www.raspberrypi.org/downloads/raspbian/){:target="_blank" rel="noopener noreferrer"} and flash it to your MicroSD card using [Etcher](https://etcher.io){:target="_blank" rel="noopener noreferrer"} as seen in the [Raspberry Pi tutorial](https://www.raspberrypi.org/documentation/installation/installing-images/README.md){:target="_blank" rel="noopener noreferrer"}. Once the process has been completed, insert the MicroSD card into your Raspberry Pi and install the OS (it should install automatically). You will now be greeted with the Raspbian Stretch OS desktop. Go to **Raspberry Pi Configuration** by selecting the menu in the top left corner of the screen. Select the **Interfaces** tab and enable **SSH** and **I2C**. Also set up your Wi-Fi in the top right corner.
 
-![Settings](/assets/images/rasp_bme_sql/settings.png)
+![Settings](/assets/img/rasp_bme_sql/settings.png)
 _Settings_
 
-![Interfaces and Wi-Fi](/assets/images/rasp_bme_sql/interfaces.png)
+![Interfaces and Wi-Fi](/assets/img/rasp_bme_sql/interfaces.png)
 _Interfaces and Wi-Fi_
 
 Open up the terminal and type in the command `sudo ifconfig` in order to locate your local IP address which will be used to connect to the Raspberry Pi remotely using PuTTY.
 
-![Local IP Address](/assets/images/rasp_bme_sql/localip.png)
+![Local IP Address](/assets/img/rasp_bme_sql/localip.png)
 _Local IP Address_
 
 Now open up PuTTY and enter your Raspberry Pi's IP Address in the **Host Name** box. The default user is `pi` and default password is `raspberry`. You can now start installing the necessary packages and libraries for this tutorial.
 
-![PuTTY](/assets/images/rasp_bme_sql/putty.png)
+![PuTTY](/assets/img/rasp_bme_sql/putty.png)
 _PuTTY_
 
 ## Installing Necessary Packages and Libraries
@@ -67,7 +69,7 @@ CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'newuserpassword';
 GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'localhost';
 ```
 
-![MariaDB](/assets/images/rasp_bme_sql/mariadb.png)
+![MariaDB](/assets/img/rasp_bme_sql/mariadb.png)
 _MariaDB_
 
 ## Wiring Raspberry Pi and BME280
@@ -82,33 +84,33 @@ flowchart LR
     SDA[SDI / SDA] -->|I2C Data| PIN3[Pin 3]
 ```
 
-![Raspberry Pi and BME280 Diagram](/assets/images/rasp_bme_sql/rasppibme280_bb.png)
+![Raspberry Pi and BME280 Diagram](/assets/img/rasp_bme_sql/rasppibme280_bb.png)
 _Raspberry Pi and BME280 Diagram_
 
 ![Raspberry Pi Zero Pinout Diagram from pinout.xyz](https://pinout.xyz/resources/raspberry-pi-pinout.png)
 _Raspberry Pi Zero Pinout Diagram from pinout.xyz_
 
-![BME 280](/assets/images/rasp_bme_sql/bme280connected.jpg)
+![BME 280](/assets/img/rasp_bme_sql/bme280connected.jpg)
 _BME 280_
 
-![Raspberry Pi Connected](/assets/images/rasp_bme_sql/piconnected.jpg)
+![Raspberry Pi Connected](/assets/img/rasp_bme_sql/piconnected.jpg)
 _Raspberry Pi Connected_
 
 Type the command `sudo i2cdetect -y 1` in the terminal and you should be able to see the output below if everything is connected correctly.
 
-![i2cdetect](/assets/images/rasp_bme_sql/i2cdetect.png)
+![i2cdetect](/assets/img/rasp_bme_sql/i2cdetect.png)
 _i2cdetect_
 
 You can run the Adafruit_BME280_Example.py script with `python Adafruit_BME280_Example.py` in order to see the BME280 sensor data at the time at which the aforementioned script was executed.
 
-![Adafruit BME280 Example Script](/assets/images/rasp_bme_sql/example.png)
+![Adafruit BME280 Example Script](/assets/img/rasp_bme_sql/example.png)
 _Adafruit BME280 Example Script_
 
 ## Python Code
 
 Go to the Adafruit_Python_BME280 directory and copy the Adafruit_BME280_Example.py script using `cp Adafruit_BME280_Example.py BME280_Custom.py`. Also create a file named BME280CSV with `touch BME280CSV` in order to save data to a CSV file which can also be done with the Raspberry Pi. Open up the BME280_Custom.py file with the vi editor using `vi BME280_Custom.py`. You should now see the unedited copy of Adafruit_BME280_Example.py. We will modify the original file in order for the BME280 sensor to continuously collect data and add it to the `BME280_Data` table created earlier in MariaDB.
 
-![Original Adafruit BME280 Example](/assets/images/rasp_bme_sql/bme1.png)
+![Original Adafruit BME280 Example](/assets/img/rasp_bme_sql/bme1.png)
 _Original Adafruit BME280 Example_
 
 The modified Python script for the BME280 sensor can be seen below. The `MySQLdb` module allows one to connect to the MySQL/MariaDB DBMS and run queries through the cursor execute option. The module `csv` allows easy editing of csv files. The `datetime` module states the current date time when the data is collected inside the `while True:` loop. The module `time` allows the data collection `while True:` loop to pause for 60 seconds with `time.sleep(60)` before it collects data again. More specific details about the code are comments within the code. You can run the BME280_Custom.py script with the `python BME280_Custom.py &`. The addition of `&` allows the script to run in the background so one can resume working on other things since this script goes on indefinitely due to `while True:`.
@@ -164,12 +166,12 @@ while True: #collects data indefinitely
 
 Open up BME280CSV with `vi BME280CSV` and you should see the CSV file populated.
 
-![BME280CSV](/assets/images/rasp_bme_sql/csv.png)
+![BME280CSV](/assets/img/rasp_bme_sql/csv.png)
 _BME280CSV_
 
 You can also see the data being added to the table we created earlier in MySQL/MariaDB with `SELECT * FROM BME280_Data;`.
 
-![MySQL/MariaDB Data](/assets/images/rasp_bme_sql/data.png)
+![MySQL/MariaDB Data](/assets/img/rasp_bme_sql/data.png)
 _MySQL/MariaDB Data_
 
 Now copy the BME280_Custom.py script and name the new file BME280_Extract.py use the command with `cp BME280_Custom.py BME280_Extract.py`. This file will be used to pull data from MySQL/MariaDB. Also create a new file named BME280CSVNEW with `touch BME280CSVNEW` in order to save the data from the query. The modified file for the BME280 sensor can be seen below along with some comments.
@@ -209,8 +211,8 @@ db.close()
 
 Run the new Python script with `python BME280_Extract.py`. Note that there is no `&` since this script does not run indefinitely as it doesn't contain the `while True:` statement. You can also view the new CSV file with `vi BME280CSVNEW`.
 
-![BME280 Extract](/assets/images/rasp_bme_sql/extract1.png)
+![BME280 Extract](/assets/img/rasp_bme_sql/extract1.png)
 _BME280 Extract_
 
-![BME280CSVNEW](/assets/images/rasp_bme_sql/extract2.png)
+![BME280CSVNEW](/assets/img/rasp_bme_sql/extract2.png)
 _BME280CSVNEW_
