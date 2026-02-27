@@ -7,7 +7,8 @@ layout: post
 toc: true
 ---
 
-![jorgem0/juggle_counter](/assets/img/github.svg){: width="100" height="100" }
+![jorgem0/juggle_counter](/assets/img/GitHub_Lockup_Black.svg){: .light width="100" height="100" }
+![jorgem0/juggle_counter](/assets/img/GitHub_Lockup_White.svg){: .dark width="100" height="100" }
 _<a href="https://github.com/jorgem0/juggle_counter" target="_blank" rel="noopener noreferrer">jorgem0/juggle_counter</a>_
 
 {% include embed/youtube.html id='wwfAgBZU508' %}

@@ -7,7 +7,8 @@ layout: post
 toc: true
 ---
 
-![jorgem0/binance-trading-robot](/assets/img/github.svg){: width="100" height="100" }
+![jorgem0/sentiment_analysis](/assets/img/GitHub_Lockup_Black.svg){: .light width="100" height="100" }
+![jorgem0/sentiment_analysis](/assets/img/GitHub_Lockup_White.svg){: .dark width="100" height="100" }
 _<a href="https://github.com/jorgem0/sentiment_analysis" target="_blank" rel="noopener noreferrer">jorgem0/sentiment_analysis</a>_
 
 ## Introduction
